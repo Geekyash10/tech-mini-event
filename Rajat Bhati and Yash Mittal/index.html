@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Carousel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            background-color: #f5f5f5;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-attachment: fixed;
+            cursor: default;
+
+        }
+
+        .outer-container {
+            position: relative;
+        }
+
+        .container {
+
+            box-shadow: 0 0 5px 0;
+            background: inherit;
+            backdrop-filter: blur(20px);
+
+            width: 600px;
+            height: 400px;
+            /* background-color: #fff; */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-box {
+            flex: 1;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+
+        .answer-box {
+            flex: 1;
+            padding: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+            outline: none;
+            display: none;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .question {
+            width: 100%;
+            flex: 0 0 auto;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+
+        .prev-arrow {
+            left: 10px;
+            margin-left: -60%;
+        }
+
+        .next-arrow {
+            right: 10px;
+            margin-right: -60%;
+        }
+
+        #myvideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        .ques {
+            color: white;
+            font-size: larger;
+            font-weight: bold;
+            /* float: right; */
+            border: 2px solid white;
+            border-radius: 25%;
+            padding-left: 4px;
+            padding-right: 4px;
+            top: 0px;
+            right: 0px;
+            z-index: 2;
+            position: absolute;
+
+        }
+
+        .quess {
+            color: white;
+            font-size: larger;
+            font-weight: bold;
+            /* float: right; */
+            border: 2px solid white;
+            border-radius: 25%;
+            padding-left: 4px;
+            padding-right: 4px;
+            top: 0px;
+            right: 0px;
+            z-index: 2;
+            position: absolute;
+            cursor: default;
+            display: none;
+            opacity: 0;
+            /* visibility: hidden; */
+
+        }
+
+        .flip-card {
+            /* background-color: transparent; */
+            /* width: 300px;
+            height: 300px; */
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            /* text-align: center; */
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+        }
+
+        /* .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        } */
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            /* width: 100%;
+            height: 100%; */
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        /* .flip-card-front {
+            background-color: #bbb;
+            color: black;
+        } */
+
+        .flip-card-back {
+            /* background-color: #2980b9; */
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                height: auto;
+                /* display: flex;
+                justify-content: center; */
+            }
+
+
+            .container {
+                height: 550px;
+                overflow: scroll;
+                width: 100%;
+            }
+
+            /* Add more styles for smaller screens as needed */
+        }
+    </style>
+</head>
+
+<body>
+
+    <video autoplay muted loop id="myvideo">
+        <source src="vid1.mp4" type="video/mp4">
+    </video>
+
+    <div class="outer-container">
+        <div class="container">
+            <div class="question-box">
+
+                <div class="carousel-container">
+                    <div class="carousel-inner" id="questionCarousel">
+                        <!-- <div class="question">
+                            <h2>Question:</h2>
+                            <div class="ques">?</div>
+                            Decode the following emoji sequence to reveal a common web development
+                            term:🌐💻🔗📄🚀(related to url)
+                        </div> -->
+
+                        <div class="flip-card question">
+                            <div class="flip-card-inner" id="helloo">
+                                <div class="flip-card-front">
+                                    <h2>Question:</h2>
+                                    <div class="ques" onclick="fun()">?</div>
+                                    I'm a code composer,
+                                    Reusable melodies, no need to be a poser.
+                                    Invoke me with parentheses, I'll play,
+                                    A set of instructions, what's my name, pray?
+
+                                    Who am I?
+
+                                </div>
+                                <div class="flip-card-back">
+                                    <h1 onclick="nextQuestion()">&#9655;</h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <h2>Question:</h2>
+                            In a realm of cubes, where geometry weaves,
+                            I'm a point where each side gently cleaves.
+                            Not the center, nor an outer mourner,
+                            A pivotal spot, I am the honored corner. What am I?
+                        </div>
+                        <!-- <div class="question">Unscramble the following web development-related term :
+                            TXEENOSI(small letters are good )
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h2>Your Answer:</h2>
+                <input type="text" id="answerInput" oninput="checkInput()" placeholder="Type your answer...">
+                <button id="submitButton" onclick="submitAnswer()">Submit</button>
+            </div>
+        </div>
+        <!-- <button class="arrow prev-arrow" onclick="prevQuestion()" id="prevButton">&#9665;</button>
+        <button class="arrow next-arrow" onclick="nextQuestion()" id="nextButton">&#9655;</button> -->
+    </div>
+
+    <div class="quess" id="final" onclick="nextpage()">&#9655;</div>
+
+    <script>
+
+        var currentQuestionIndex = 0;
+        var totalQuestions = 2;
+        var answers = ["function", "corner"];
+
+        function showQuestion(index) {
+            var carouselInner = document.getElementById('questionCarousel');
+            var offset = -index * 100 + '%';
+            carouselInner.style.transform = 'translateX(' + offset + ')';
+        }
+
+        function nextQuestion() {
+
+            document.getElementById('final').style.display = 'block';
+            document.getElementById('answerInput').setAttribute("readonly", "true");
+            document.getElementById('answerInput').placeholder = '';
+
+            currentQuestionIndex = (currentQuestionIndex + 1) % totalQuestions;
+            showQuestion(currentQuestionIndex);
+            resetAnswerInput();
+            hideNavButtons();
+        }
+
+        function prevQuestion() {
+            currentQuestionIndex = (currentQuestionIndex - 1 + totalQuestions) % totalQuestions;
+            showQuestion(currentQuestionIndex);
+            hideHintPopup();
+            resetAnswerInput();
+            hideNavButtons();
+        }
+
+        function hideNavButtons() {
+            var prevButton = document.getElementById('prevButton');
+            var nextButton = document.getElementById('nextButton');
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
+        }
+
+        function checkInput() {
+            var answerInput = document.getElementById('answerInput');
+            var submitButton = document.getElementById('submitButton');
+            var prevButton = document.getElementById('prevButton');
+            var nextButton = document.getElementById('nextButton');
+
+            submitButton.style.display = 'none';
+            if (answerInput.value === answers[0]) {
+                submitButton.style.display = 'block';
+            }
+            else if (answerInput.value === answers[currentQuestionIndex]) {
+                // prevButton.style.display = 'block';
+                // nextButton.style.display = 'block';
+                submitButton.style.display = 'block';
+            }
+            // else {
+            //     prevButton.style.display = 'none';
+            //     nextButton.style.display = 'none';
+            // }
+        }
+
+        // if (answerInput.value === answers[1]) {
+        //     document.getElementsByClassName('quess').style.display = 'block';
+        // }
+
+        function submitAnswer() {
+
+            if (answerInput.value === answers[1]) {
+                document.getElementById('final').style.display = 'block';
+            }
+        }
+
+        function resetAnswerInput() {
+            document.getElementById('answerInput').value = '';
+        }
+
+        showQuestion(currentQuestionIndex);
+
+        function fun() {
+            if (answerInput.value === answers[0]) {
+                document.getElementById("helloo").style.transform = "rotateY(180deg)";
+            }
+
+        }
+
+        function nextpage() {
+            console.log("hello world");
+            // ---------------------------------------------------------------------
+
+            // write your code for the next page here
+
+            // ---------------------------------------------------------------------
+
+
+        }
+
+        document.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+        });
+
+        document.onkeydown = (event) => {
+            if (event.key == 123) {
+                event.preventDefault();
+            }
+            if (event.ctrlKey && event.shiftKey && event.key == 'I') {
+                event.preventDefault();
+            }
+            if (event.ctrlKey && event.shiftKey && event.key == 'C') {
+                event.preventDefault();
+            }
+            if (event.ctrlKey && event.shiftKey && event.key == 'J') {
+                event.preventDefault();
+            }
+            if (event.ctrlKey && event.key == 'U') {
+                event.preventDefault();
+            }
+        };
+
+    </script>
+</body>
+
+</html>
