@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebHunt</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="heading"></h1>
+    <img src="./image.jpg" alt="Image" class="image">
+    <div class="subheading">Enter the answer</div>
+    <div class="answer-section">
+      <form onsubmit="validateForm()">
+        <input type="text" id="answerInput" placeholder="Your answer">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    <div class="btn-container">
+      <button class="btn-back" onclick="goBack()">Back</button>
+      <button class="btn-next" disabled>Next</button>
+    </div>
+  </div>
+  
+    <script>
+      function goToPage1() {
+        window.location.href = 'page1.html';
+      }
+      function goBack() {
+        window.history.back();
+      }
+      function validateForm() {
+        var answer = document.getElementById('answerInput').value;
+        if (answer === 'URL') {
+          alert('Correct answer!');
+          return true;
+        } else {
+          alert('Incorrect answer. Try again!');
+          return false;
+        }
+      }
+      setTimeout(function() {
+        alert("Clue: Search for differences across the entire screen!");
+      }, 60000);
+
+      document.onkeydown = (event) => {
+    if (event.key == 123) {
+        event.preventDefault();
+    }
+    if (event.ctrlKey && event.shiftKey && event.key == 'I') {
+        event.preventDefault();
+    }
+    if (e.ctrlKey && event.shiftKey && event.key == 'C') {
+        event.preventDefault();
+    }
+    if (e.ctrlKey && event.shiftKey && event.key == 'J') {
+        event.preventDefault();
+    }
+    if (event.ctrlKey && event.key == 'U') {
+        event.preventDefault();
+    }
+};
+
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault();
+ });
+    </script>
+
+  </body>
+  </html>

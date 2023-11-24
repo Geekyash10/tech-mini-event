@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebHunt</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <div class="container">
+    <h1 class="heading">FIND THE DIFFERENCES<br>"Embark on a journey through the links, but don't let the captivating images distract you from the hidden variations in the pathways.</h1>
+    <img src="./image.jpg" alt="Image" class="image" />
+    <div class="btn-container">
+      <button class="btn-back" disabled>Back</button>
+      <button class="btn-next" onclick="goToPage2()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    function goToPage2() {
+      window.location.href = "page2_answer=URL.html";
+    }
+
+    setTimeout(function () {
+      alert("Clue: Search for differences across the entire screen!");
+    }, 60000);
+
+    document.onkeydown = (event) => {
+      if (event.key == 123) {
+        event.preventDefault();
+      }
+      if (event.ctrlKey && event.shiftKey && event.key == "I") {
+        event.preventDefault();
+      }
+      if (event.ctrlKey && event.shiftKey && event.key == "C") {
+        event.preventDefault();
+      }
+      if (event.ctrlKey && event.shiftKey && event.key == "J") {
+        event.preventDefault();
+      }
+      if (event.ctrlKey && event.key == "U") {
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener("contextmenu", function (event) {
+      event.preventDefault();
+    });
+  </script>
+</body>
+</html>
